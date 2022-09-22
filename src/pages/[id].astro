@@ -1,0 +1,18 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { data } from '../lib/data.js';
+export async function getStaticPaths() {
+  return data.map(({ id, title, details }) => {
+    return {
+      params: { id },
+      props: { title, details },
+    };
+  });
+}
+const { title, details } = Astro.props;
+---
+
+<Layout title={title}>
+  <h1>{title}</h1>
+  <p>{details}</p>
+</Layout>

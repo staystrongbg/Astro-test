@@ -1,0 +1,91 @@
+---
+import { data } from '../lib/data.js';
+---
+
+<div class='root'>
+  <div class='nav'>
+    {
+      data.map((l) => (
+        <a href={`#${l.id}`} class={l.id === 'product' && 'bold'}>
+          {l.title}
+        </a>
+      ))
+    }
+  </div>
+  <div class='content'>
+    {
+      data.map((c) => (
+        <div class={(c.id, c?.class)} id={c.id}>
+          <h3>{c.title}</h3>
+          <p>{c.details}</p>
+        </div>
+      ))
+    }
+  </div>
+</div>
+
+<style>
+  a {
+    text-decoration: none;
+    color: #000;
+    padding: 10px 0;
+  }
+  .root {
+    width: 600px;
+    margin: auto;
+  }
+  .nav {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .product,
+  .delivery,
+  .return {
+    padding: 10px 20px;
+  }
+
+  .content {
+  }
+  .content h3 {
+    line-height: 34px;
+    color: #000;
+  }
+  p {
+    font-size: 16px;
+    line-height: 22px;
+    color: #000;
+  }
+
+  .hide {
+    display: none;
+  }
+  .bold {
+    font-weight: bold;
+  }
+  .purple-background {
+    background-color: rgb(65, 4, 65);
+  }
+
+  .white-text {
+    color: white;
+  }
+</style>
+<script define:vars={{ data }}>
+  const content = document.querySelector('.content');
+  const nav = document.querySelector('.nav');
+
+  nav.addEventListener('click', (e) => {
+    [...nav.children].forEach((link) => link.classList.remove('bold'));
+    e.target.classList.add('bold');
+
+    const section = e.target.innerText.toLowerCase().split(' ');
+    const targetSection = [...content.children].filter(
+      (s) => s.id === section[0]
+    );
+    [...content.children].forEach((child) => child.classList.add('hide'));
+    targetSection[0].classList.remove('hide');
+  });
+</script>
+<!-- astro has no virtual dom so there is no sinthetic events, only vanilajs or install React as plugin is available  -->
