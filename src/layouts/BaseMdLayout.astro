@@ -1,0 +1,28 @@
+---
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+const { frontmatter } = Astro.props;
+---
+
+<html>
+  <head>
+    <!-- Add other Head elements here, like styles and meta tags. -->
+    <title>{frontmatter.title}</title>
+  </head>
+
+  <body>
+    <Navbar />
+    <!-- Add other UI components here, like common headers and footers. -->
+    <h1>{frontmatter.title} by {frontmatter.author}</h1>
+    <!-- 2. Rendered HTML will be passed into the default slot. -->
+    <slot />
+    <p>Written on: {frontmatter.date}</p>
+    <Footer />
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+  </body>
+</html>
